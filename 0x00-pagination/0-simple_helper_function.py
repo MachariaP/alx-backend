@@ -10,7 +10,7 @@ Page numbers are 1-indexed(first page is page 1.
 def index_range(page: int, page_size: int) -> tuple:
     """
     Calculates the start and end index for pagination.
-    
+
     Parameters:
         page (int): The current page number.
         page_size (int): The number of items per page.
