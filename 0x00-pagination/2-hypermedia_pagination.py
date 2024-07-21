@@ -2,6 +2,7 @@ import csv
 import math
 from typing import Tuple, List
 
+
 def index_range(page: int, page_size: int) -> Tuple[int, int]:
     """
     Returns a tuple containing the start index and end index for pagination.
@@ -9,6 +10,7 @@ def index_range(page: int, page_size: int) -> Tuple[int, int]:
     start_index = (page - 1) * page_size
     end_index = start_index + page_size
     return (start_index, end_index)
+
 
 class Server:
     """
@@ -31,7 +33,8 @@ class Server:
 
     def get_page(self, page: int = 1, page_size: int = 10) -> List[List]:
         """
-        Retrieve a page of data from the dataset based on pagination parameters.
+        Retrieve a page of data from the dataset based on
+        pagination parameters.
         """
         assert isinstance(page, int) and page > 0
         assert isinstance(page_size, int) and page_size > 0
