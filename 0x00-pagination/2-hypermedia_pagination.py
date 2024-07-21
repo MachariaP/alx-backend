@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+
 import csv
 import math
 from typing import List, Tuple
@@ -31,9 +32,13 @@ class Server:
     def dataset(self) -> List[List]:
         """Load and cache dataset from a CSV file."""
         if self.__dataset is None:
-            with open(self.DATA_FILE) as f:
-                reader = csv.reader(f)
-                self.__dataset = [row for row in reader][1:]  # Exclude header
+            try:
+                with open(self.DATA_FILE) as f:
+                    reader = csv.reader(f)
+                    self.__dataset = [row for row in reader][1:]
+            except FileNotFoundError:
+                print(f"Error: File '{self.DATA_FILE}' not found.")
+                self.__dataset = []
         return self.__dataset
 
     def get_page(self, page: int = 1, page_size: int = 10) -> List[List]:
