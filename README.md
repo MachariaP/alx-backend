@@ -1,5 +1,10 @@
 # ALX Backend Storage
 
+
+![](https://d31ezp3r8jwmks.cloudfront.net/z72iogxov1an3lhfqau0vctadt0u)
+
+
+
 ![Repo size](https://img.shields.io/github/repo-size/MachariaP/alx-backend-storage)
 ![Pep8 style](https://img.shields.io/badge/PEP8-style%20guide-purple?style=round-square)
 ![Latest commit](https://img.shields.io/github/last-commit/MachariaP/alx-backend-storage/main?style=round-square)
