@@ -26,7 +26,8 @@ class LFUCache(BaseCaching):
         self.lru_tracker[key] = self.lru_tracker.get(key, 0) + 1
 
         if len(self.cache_data) > BaseCaching.MAX_ITEMS:
-            least_used = min(self.usage_counts.items(), key=lambda x: (x[1], self.lru_tracker[x[0]]))
+            least_used = min(self.usage_counts.items(),
+                             key=lambda x: (x[1], self.lru_tracker[x[0]]))
             del self.cache_data[least_used[0]]
             del self.usage_counts[least_used[0]]
             del self.lru_tracker[least_used[0]]
