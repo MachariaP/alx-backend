@@ -14,7 +14,6 @@ class MRUCache(BaseCaching):
         super().__init__()
         self.key_tracker = []
 
-
     def put(self, key, item):
         """ Assigns item value for the key in self.cache_data dictionary.
             Discard the most recently used item if the cache exceeds its limit.
