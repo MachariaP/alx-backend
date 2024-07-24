@@ -14,6 +14,7 @@ class LFUCache(BaseCaching):
         super().__init__()
         self.usage_counts = {}  # Frequency of access
         self.lru_tracker = {}  # Order of access
+        self.operation_counter = 0  # Order of operations
 
     def put(self, key, item):
         """ Add or update a key-value pair. Discard the least
@@ -23,7 +24,8 @@ class LFUCache(BaseCaching):
             return
         self.cache_data[key] = item
         self.usage_counts[key] = self.usage_counts.get(key, 0) + 1
-        self.lru_tracker[key] = self.lru_tracker.get(key, 0) + 1
+        self.operation_counter += 1
+        self.lru_tracker[key] = self.operation_counter
 
         if len(self.cache_data) > BaseCaching.MAX_ITEMS:
             least_used = min(self.usage_counts.items(),
@@ -40,5 +42,6 @@ class LFUCache(BaseCaching):
         if key is None or key not in self.cache_data:
             return None
         self.usage_counts[key] += 1
-        self.lru_tracker[key] += 1
+        self.operation_counter += 1
+        self.lru_tracker[key] = self.operation_counter
         return self.cache_data[key]
