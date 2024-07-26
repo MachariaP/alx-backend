@@ -23,22 +23,27 @@ class LFUCache(BaseCaching):
         if key is None or item is None:
             return
 
-        self.cache_data[key] = item
-        self.usage_counts[key] = self.usage_counts.get(key, 0) + 1
-        self.usage_order[key] = self._current_time()
+        if key in self.cache_data:
+            self.cache_data[key] = item
+            self.usage_counts[key] += 1
+            self.usage_order[key] = self._current_time()
+        else:
+            if len(self.cache_data) >= BaseCaching.MAX_ITEMS:
+                # Find the least frequently used keys
+                min_freq = min(self.usage_counts.values())
+                lfu_keys = [k for k, v in self.usage_counts.items(
+                    ) if v == min_freq]
 
-        if len(self.cache_data) > BaseCaching.MAX_ITEMS:
-            # Find the least frequently used keys
-            min_freq = min(self.usage_counts.values())
-            lfu_keys = [k for k,
-                        v in self.usage_counts.items() if v == min_freq]
+                # Find the least recently used key among them
+                lru_key = min(lfu_keys, key=lambda k: self.usage_order[k])
+                del self.cache_data[lru_key]
+                del self.usage_counts[lru_key]
+                del self.usage_order[lru_key]
+                print("DISCARD:", lru_key)
 
-            # Find the least recently used key among them
-            lru_key = min(lfu_keys, key=lambda k: self.usage_order[k])
-            del self.cache_data[lru_key]
-            del self.usage_counts[lru_key]
-            del self.usage_order[lru_key]
-            print("DISCARD:", lru_key)
+            self.cache_data[key] = item
+            self.usage_counts[key] = 1
+            self.usage_order[key] = self._current_time()
 
     def get(self, key):
         """ Get an item by key
